@@ -99,6 +99,8 @@ if (isset($_POST["personel_ban_id"])) {
   if ($ban_personel) {
     $sonuc["ban_personel"] = "Personel başarılı bir şekilde işten çıkartıldı!";
     $ban_personel = null;
+    $addlog = $db->prepare("INSERT INTO logger SET log_tur = 0, log_icerik = ? , log_date = ?");
+    $addlog->execute(["Bir adet personel silindi!","Deneme_veri"]);
   } else {
     $sonuc["ban_personel_error"] = "Personel işten çıkarılırken bir hata oluştu!";
     $ban_personel = null;
