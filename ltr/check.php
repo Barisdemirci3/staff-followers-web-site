@@ -82,6 +82,8 @@ if (isset($_POST["personel_delete_id"])) {
     $sonuc["delete_personel"] = "Personel başarılı bir şekilde silindi!";
     $delete_personel = null;
   } else {
+    $addlog = $db->prepare("INSERT INTO logger SET log_tur = 0, log_icerik = ? , log_date = ?");
+    $addlog->execute(["Personel silinmeye çalışıldı fakat sistemle ilgili bir hata oluştu!","Deneme_veri"]);
     $sonuc["delete_personel_error"] = "Personel silinirken bir hata oluştu!";
     $delete_personel = null;
   }
@@ -122,6 +124,8 @@ if (isset($_POST["name"])) {
 if (isset($_POST["pozisyonbool"])) {
   $deleteallpozisyon = $db->query("DELETE FROM personel_gorevleri");
   if ($deleteallpozisyon) {
+    $addlog = $db->prepare("INSERT INTO logger SET log_tur = 0, log_icerik = ? , log_date = ?");
+    $addlog->execute(["Tüm pozisyonlar silindi!","Deneme_veri"]);
     $sonuc["allpozisyondelete"] = "Tüm pozisyonlar başarılı bir şekilde silindi!";
   }
 }
@@ -136,6 +140,8 @@ if (isset($_POST["rebornarray"])) {
     $updatedata->execute([$decodeeditarray[0], $decodeeditarray[1], $decodeeditarray[2], $decodeeditarray[3], $decodeeditarray[4], $decodeeditarray[5], $decodeeditarray[6], $decodeeditarray[7]]);
     if ($updatedata) {
       $sonuc["editbasarili"] = "Bilgiler başarılı bir şekilde değiştirildi!";
+      $addlog = $db->prepare("INSERT INTO logger SET log_tur = 0, log_icerik = ? , log_date = ?");
+    $addlog->execute(["Personel bilgileri silindi!","Deneme_veri"]);
     }
   }
 }
